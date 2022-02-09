@@ -13,7 +13,32 @@ class UI:
                
 class Logic:
     def __init__(self):
-       pass 
+        self.dict = [] #dictionary if I can get it to work
+        self.winword = "witch"
+        self.NumberOfGuessedWords = 0  
+    def checkWord(self, word):
+        if len(word)==True:
+            return True 
+        else:
+            return False
+    def generateColor(self, letter):
+        for i in winword:
+            if letter == i:
+                return "green"
+        if i in winword:
+            return "yellow"
+        else:
+            return "grey"
+    def proccessWord(self, inputWord, outputArray):
+        word = inputWord.get()
+        if checkWord(word):
+            inputWord.destroy()
+            for i in range(len(outputArray)):
+                outputArray[i].config(text = word[i], color = generateColor(word[i]))
+                outputArray[i].grid(row = self.NumberOfGuessedWords, column = i)
+
+
+
 logic = Logic()
 ui = UI()
 
