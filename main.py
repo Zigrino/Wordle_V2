@@ -6,11 +6,19 @@ class UI:
         self.answerFrame = tk.LabelFrame(text = "Revealed")
         self.wordFrame = tk.LabelFrame(text = "Input words here")
         self.buttonFrame = tk.Frame()
+        self.wordArray = [tk.Entry(self.wordFrame), tk.Entry(self.wordFrame), tk.Entry(self.wordFrame), tk.Entry(self.wordFrame), tk.Entry(self.wordFrame), tk.Entry(self.wordFrame)]
+        self.GuessedWordArray = [[tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame)], [tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame)], [tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame)], [tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame)], [tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame)], [tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame)], ]
     def draw_array(self, array):
         for i in range(len(array)):
             for j in range(len(array[i])):
                window.grid(row =  i, column = j)
+    def draw_list(self, list):
+        for i in range(len(list)):
+            list[i].grid(row = i, column = 0)
                
+    def draw(self):
+        self.draw_array(self.GuessedWordArray)
+        self.draw_list(self.wordArray)
 class Logic:
     def __init__(self):
         self.dict = [] #dictionary if I can get it to work
@@ -36,11 +44,13 @@ class Logic:
             for i in range(len(outputArray)):
                 outputArray[i].config(text = word[i], color = generateColor(word[i]))
                 outputArray[i].grid(row = self.NumberOfGuessedWords, column = i)
+            self.NumberOfGuessedWords += 1
 
 
 
 logic = Logic()
 ui = UI()
+ui.draw()
 
 
                
