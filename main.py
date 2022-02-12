@@ -30,19 +30,19 @@ class Logic:
         else:
             return False
     def generateColor(self, letter):
-        for i in winword:
+        for i in self.winword:
             if letter == i:
                 return "green"
-        if i in winword:
-            return "yellow"
+            if i in self.winword:
+                return "yellow"
         else:
             return "grey"
     def proccessWord(self, inputWord, outputArray):
         word = inputWord.get()
-        if checkWord(word):
+        if self.checkWord(word):
             inputWord.destroy()
             for i in range(len(outputArray)):
-                outputArray[i].config(text = word[i], color = generateColor(word[i]))
+                outputArray[i].config(text = word[i], color = self.generateColor(word[i]))
                 outputArray[i].grid(row = self.NumberOfGuessedWords, column = i)
             self.NumberOfGuessedWords += 1
 
