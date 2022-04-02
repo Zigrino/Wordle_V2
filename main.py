@@ -16,13 +16,14 @@ class UI:
         self.checkButton = tk.Button(text = "Submit", command = self.proccessWord)
         self.wordArray = [tk.Entry(self.wordFrame), tk.Entry(self.wordFrame), tk.Entry(self.wordFrame), tk.Entry(self.wordFrame), tk.Entry(self.wordFrame), tk.Entry(self.wordFrame)]
         self.GuessedWordArray = [[tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame)], [tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame)], [tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame)], [tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame)], [tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame)], [tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame), tk.Label(self.answerFrame)], ]
-        self.keyboardFrame = tk.LabelFrame(text =  "Keyboard")
+        self.keyboardFrame = tk.LabelFrame(text =  "Letters")
         self.keyboardstr = "qwertyuiopasdfghjklzxcvbnm"
         self.keyboard = []
         self.errorFrame = tk.Frame()
         self.errorLabel = tk.Label(self.errorFrame)
         for i in self.keyboardstr:
             self.keyboard.append(tk.Label(self.keyboardFrame, text = i))
+
     def draw_array(self, array):
         for i in range(len(array)):
             for j in range(len(array[i])):
@@ -42,13 +43,13 @@ class UI:
         self.checkButton.pack()
         self.keyboardFrame.pack()
         for i in range(len(self.keyboard)):
-            if i <= 10:
+            if i <= 9:
                 collumn = i
                 row = 1
-            elif i <= 19:
+            elif i <= 18:
                 collumn = i-10
                 row = 2
-            elif i <= 26:
+            elif i <= 25:
                 collumn = i-19
                 row = 3
             self.keyboard[i].grid(row = row, column = collumn)
@@ -67,6 +68,11 @@ class Logic:
             self.winword = random.choice(self.winword)
         self.NumberOfGuessedWords = 0  
         self.keyboardstr = "qwertyuiopasdfghjklzxcvbnm"
+        self.wordcounts = {"a": 0, "b": 0, "c": 0, "d": 0, "e": 0, "f": 0, "g": 0, "h": 0, "i": 0, "j": 0, "k": 0, "l": 0, "m": 0, "n": 0, "o": 0, "p": 0, "q": 0, "r": 0, "s": 0, "t": 0, "u": 0, "v": 0, "w": 0, "x": 0, "y": 0, "z": 0,}
+        self.timescounted = {"a": 0, "b": 0, "c": 0, "d": 0, "e": 0, "f": 0, "g": 0, "h": 0, "i": 0, "j": 0, "k": 0, "l": 0, "m": 0, "n": 0, "o": 0, "p": 0, "q": 0, "r": 0, "s": 0, "t": 0, "u": 0, "v": 0, "w": 0, "x": 0, "y": 0, "z": 0,}
+        self.winword = "bluff"
+        for i in self.winword:
+            self.wordcounts[i] += 1
     def checkWord(self, word, error):
 
         if len(word)!=5:
@@ -82,30 +88,49 @@ class Logic:
         #    return False
         else:
             return False
-    def generateColor(self, letter, position, keyboard):
-        lettercount = 0
-        for i in self.winword:
-            if i == letter:
-               lettercount += 1 
+    def generateColor(self, letter, position, keyboard, word):
+        green = False
+        yellow = False
+        grey = False
+        print(letter)
+         
         if letter == self.winword[position]:
+            self.timescounted[letter] += 1
             keyboard[self.keyboardstr.index(letter)].config(bg = "green")
-            return "green"
-        if letter in self.winword:
-            keyboard[self.keyboardstr.index(letter)].config(bg = "yellow")
-            return "yellow"
+            green = True
+        elif letter in self.winword:
+            self.timescounted[letter] += 1
+            if keyboard[self.keyboardstr.index(letter)].cget("bg") != "green":
+                keyboard[self.keyboardstr.index(letter)].config(bg = "yellow")
+            for i in range(len(word)):
+               if word[i] == self.winword[i] and word[i] == letter:
+                   print('has green at possition', i)
+            yellow = True
+
+
+
         else:
             keyboard[self.keyboardstr.index(letter)].config(bg = "grey")
+            grey = True
+        
+        if green:
+            return "green"
+        elif yellow:
+            return "yellow"
+        elif grey:
             return "grey"
     def proccessWord(self, inputWord, outputArray, keyboard, error):
         print("proccessing word")
         word = inputWord.get()
+
         if self.checkWord(word, error):
             inputWord.destroy()
             for i in range(len(outputArray[self.NumberOfGuessedWords])):
-                outputArray[self.NumberOfGuessedWords][i].config(text = word[i], bg = self.generateColor(word[i], i, keyboard), fg = "blue")
-                print(word[i])
+                outputArray[self.NumberOfGuessedWords][i].config(text = word[i], bg = self.generateColor(word[i], i, keyboard, word), fg = "blue")
                 outputArray[self.NumberOfGuessedWords][i].grid(row = self.NumberOfGuessedWords, column = i)
             self.NumberOfGuessedWords += 1
+        if word == self.winword:
+            tk.messagebox.showinfo("", "You Win! :D")
     def cheat(self, e):
         print(self.winword)
 
