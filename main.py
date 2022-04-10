@@ -19,7 +19,6 @@ class UI:
         self.keyboardFrame = tk.LabelFrame(text =  "Letters")
         self.keyboardstr = "qwertyuiopasdfghjklzxcvbnm"
         self.keyboard = []
-        #sdfff
         self.errorFrame = tk.Frame()
         self.errorLabel = tk.Label(self.errorFrame)
         for i in self.keyboardstr:
@@ -71,7 +70,7 @@ class Logic:
         self.keyboardstr = "qwertyuiopasdfghjklzxcvbnm"
         self.wordcounts = {"a": 0, "b": 0, "c": 0, "d": 0, "e": 0, "f": 0, "g": 0, "h": 0, "i": 0, "j": 0, "k": 0, "l": 0, "m": 0, "n": 0, "o": 0, "p": 0, "q": 0, "r": 0, "s": 0, "t": 0, "u": 0, "v": 0, "w": 0, "x": 0, "y": 0, "z": 0,}
         self.timesinword = {"a": 0, "b": 0, "c": 0, "d": 0, "e": 0, "f": 0, "g": 0, "h": 0, "i": 0, "j": 0, "k": 0, "l": 0, "m": 0, "n": 0, "o": 0, "p": 0, "q": 0, "r": 0, "s": 0, "t": 0, "u": 0, "v": 0, "w": 0, "x": 0, "y": 0, "z": 0,}
-        #self.winword = "bluff"
+        self.winword = "salvo"
         for i in self.winword:
             self.wordcounts[i] += 1
         print(self.wordcounts)
@@ -146,6 +145,7 @@ class Logic:
             for i in range(5):
                 if word[i] in self.winword and timescounted[word[i]] < self.wordcounts[word[i]] and color_list[i] == "grey":
                     color_list[i] = "yellow"    
+                    timescounted[word[i]] += 1
                 
             print(timescounted)
             
