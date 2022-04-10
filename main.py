@@ -121,7 +121,6 @@ class Logic:
         elif grey:
             return "grey"
     def proccessWord(self, inputWord, outputArray, keyboard, error):
-        print("proccessing word")
         word = inputWord.get()
         color_list = ["grey", "grey", "grey", "grey", "grey"]
         timescounted = {"a": 0, "b": 0, "c": 0, "d": 0, "e": 0, "f": 0, "g": 0, "h": 0, "i": 0, "j": 0, "k": 0, "l": 0, "m": 0, "n": 0, "o": 0, "p": 0, "q": 0, "r": 0, "s": 0, "t": 0, "u": 0, "v": 0, "w": 0, "x": 0, "y": 0, "z": 0,}
@@ -147,27 +146,18 @@ class Logic:
                     color_list[i] = "yellow"    
                     timescounted[word[i]] += 1
                 
-            print(timescounted)
 
             for i in range(len(color_list)):
-                print("#######################")
                 if keyboard[self.keyboardstr.index(word[i])].cget("bg") == "green":
-                    print("green passed")
                     pass
                 elif keyboard[self.keyboardstr.index(word[i])].cget("bg") == "yellow" and color_list[i] == "green":
-                    print("yellow turning green")
                     keyboard[self.keyboardstr.index(word[i])].config(bg = "green")
                 elif keyboard[self.keyboardstr.index(word[i])].cget("bg") == "grey":
-                    print("was grey")
                     keyboard[self.keyboardstr.index(word[i])].config(bg = color_list[i])
                 elif keyboard[self.keyboardstr.index(word[i])].cget("bg") == "white":
-                    print("was white")
                     keyboard[self.keyboardstr.index(word[i])].config(bg = color_list[i])
                 else:
-                    print("else, idk how")
                     keyboard[self.keyboardstr.index(word[i])].config(bg = color_list[i])
-                print(color_list[i])
-                print(keyboard[self.keyboardstr.index(word[i])].cget('bg'))
                 
 
 
